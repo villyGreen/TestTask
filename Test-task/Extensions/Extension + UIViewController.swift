@@ -48,18 +48,14 @@ extension UISearchBar {
         let size = CGSize(width: UIScreen.main.bounds.width, height: 50.0)
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(origin: .zero, size: size))
         doneToolbar.barStyle = .default
-        
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done,
                                                     target: self, action: #selector(self.doneButtonAction))
-        
         let items = [flexSpace, done]
         doneToolbar.items = items
         doneToolbar.sizeToFit()
-        
         self.inputAccessoryView = doneToolbar
     }
-    
     @objc
     func doneButtonAction() {
         self.resignFirstResponder()
