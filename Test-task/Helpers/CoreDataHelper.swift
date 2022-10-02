@@ -21,7 +21,7 @@ class CoreDataService: NSObject {
         })
         return container
     }()
-    
+
     // MARK: - Core Data Saving support
     func saveContext () {
         let context = persistentContainer.viewContext
@@ -34,7 +34,7 @@ class CoreDataService: NSObject {
             }
         }
     }
-    
+
     func save(model: LoadedData) {
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.entityName, in: context) else { return }
         let savedData = SavedData(entity: entity, insertInto: context)
@@ -50,7 +50,7 @@ class CoreDataService: NSObject {
             print(error.localizedDescription)
         }
     }
-    
+
     func fetch() -> [LoadedData]? {
         let fetchRequest: NSFetchRequest<SavedData> = SavedData.fetchRequest()
         var convertedData = [LoadedData]()
@@ -69,9 +69,9 @@ class CoreDataService: NSObject {
         }
         return convertedData
     }
-    
+
     func delete(id: UUID) {
-        
+
         let predicateRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: Constants.entityName)
         predicateRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: predicateRequest)

@@ -18,7 +18,7 @@ extension UIViewController {
         cell.configure(value: model)
         return cell
     }
-    
+
     func setupTabBar(_ tabBar: MainTabBarView, alphaValue: CGFloat) {
         UIView.animate(withDuration: 0.2) {
             tabBar.imageView.alpha = alphaValue
@@ -26,7 +26,7 @@ extension UIViewController {
             tabBar.starButton.alpha = alphaValue
         }
     }
-    
+
     func showAlert(title: String, message: String, actionTitle: String, isCancelButton: Bool,
                    completion: @escaping ((Bool) -> Void)) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

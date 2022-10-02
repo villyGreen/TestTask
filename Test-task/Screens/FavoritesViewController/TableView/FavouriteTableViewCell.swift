@@ -8,7 +8,7 @@
 import UIKit
 
 class FavouriteTableViewCell: UITableViewCell, CellConfiguring {
-    
+
     static var reuseID = String(describing: self)
     let previewImage = UIImageView()
     let nameAuthor = UILabel()
@@ -37,7 +37,6 @@ extension FavouriteTableViewCell {
             previewImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
                                                   constant: Constants.defaultValue),
             previewImage.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            
             nameAuthor.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,
                                                  constant: -Constants.defaultValue),
             nameAuthor.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)

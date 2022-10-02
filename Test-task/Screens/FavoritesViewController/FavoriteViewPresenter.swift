@@ -13,7 +13,7 @@ class FavoriteViewPresenter: NSObject {
     func setDelegate(_ delegate: FavouriteViewDelegate) {
         self.delegate = delegate
     }
-    
+
     func fetchData() {
         guard let fetchData = CoreDataService.standart.fetch() else {
             return

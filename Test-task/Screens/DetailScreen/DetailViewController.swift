@@ -15,25 +15,25 @@ class DetailViewController: UIViewController {
     private let countOfDownloadsLabel = UILabel()
     private var barButton: UIBarButtonItem?
     private var downloadButton = UIButton(type: .system)
-    
+
     private var mainTabBar: MainTabBarView {
         return (self.tabBarController as? MainTabBarView) ?? MainTabBarView()
     }
     private var loadedData: LoadedData?
     private var presenter: DetailViewPresenter?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         initPresenter()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupTabBar(self.mainTabBar, alphaValue: 0)
         checkID()
     }
-    
+
     convenience init(fromTableView: Bool, loadedData: LoadedData) {
         self.init()
         self.loadedData = loadedData
@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
                                                    constant: 0).isActive = true
         self.view.setNeedsLayout()
     }
-    
+
     private func checkID() {
         self.presenter?.containsId(loadedData?.uuid.uuidString ?? "",
                                    completion: { success in
@@ -62,11 +62,11 @@ private extension DetailViewController {
         setupImageView()
         setupLabels()
     }
-    
+
     private func initPresenter() {
         self.presenter = DetailViewPresenter()
     }
-    
+
     private func setupImageView() {
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
@@ -75,7 +75,7 @@ private extension DetailViewController {
         previewImageView.downloadImage(loadedData?.url ?? "")
         self.view.addSubview(previewImageView)
         previewImageView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             self.previewImageView.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor,
                                                        constant: Constants.defaultValue),
@@ -87,13 +87,13 @@ private extension DetailViewController {
                                                             constant: -Constants.defaultValue)
         ])
     }
-    
+
     private func setupNavigationBar() {
         barButton = UIBarButtonItem(barButtonSystemItem: .add,
                                     target: self, action: #selector(addToFavorite))
         self.navigationItem.rightBarButtonItem = barButton
     }
-    
+
     @objc
     private func addToFavorite() {
         self.showAlert(title: "Added", message: "Current image was added to your list",
@@ -105,24 +105,22 @@ private extension DetailViewController {
                         self.presenter?.saveDataToStorage(self.loadedData ?? LoadedData())
                        })
     }
-    
+
     @objc
     private func downloadImage() {
         UIImageWriteToSavedPhotosAlbum(previewImageView.image ?? UIImage(),
                                        self, #selector(saveCompleted),
                                        nil)
     }
-    
+
     @objc
     func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         self.showAlert(title: "Success",
                        message: "Image was success load to library",
                        actionTitle: "Ok",
                        isCancelButton: false) { _ in
-            
         }
     }
-    
     private func setupLabels() {
         let labels = [nameAuthorLabel, dateCreateLabel,
                       locationLabel, countOfDownloadsLabel]
@@ -137,7 +135,6 @@ private extension DetailViewController {
         labelsStackView.spacing = Constants.defaultValue
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(labelsStackView)
-        
         downloadButton.setTitle("Download", for: .normal)
         downloadButton.tintColor = .systemBlue
         downloadButton.setTitleColor(.systemRed, for: .normal)
@@ -157,13 +154,11 @@ private extension DetailViewController {
                                                     constant: Constants.defaultValue),
             downloadButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
                                                      constant: -Constants.defaultValue),
-            
             downloadButton.heightAnchor.constraint(equalToConstant: 20)
         ])
-        
         fillLabels()
     }
-    
+
     private func fillLabels() {
         DispatchQueue.main.async {
             self.nameAuthorLabel.text = "Name of Author: \(self.loadedData?.nameAuthor ?? "No author")"

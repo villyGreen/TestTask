@@ -14,7 +14,7 @@ private enum Screens: Int {
 class MainTabBarView: UITabBarController {
     let listButton = UIButton()
     let starButton = UIButton()
-    
+
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "background")
@@ -25,13 +25,13 @@ class MainTabBarView: UITabBarController {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         makeUI()
         setupTabBar()
     }
-    
+
     private func setupButton(button: UIButton, image: UIImage, selector: Selector) {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(image, for: .normal)
@@ -41,7 +41,7 @@ class MainTabBarView: UITabBarController {
         self.view.insertSubview(button, aboveSubview: self.tabBar)
         self.view.bringSubviewToFront(button)
     }
-    
+
     private func makeUI() {
         self.view.addSubview(imageView)
         tabBar.isHidden = true
@@ -53,7 +53,7 @@ class MainTabBarView: UITabBarController {
                     selector: #selector(favoriteButtonAction))
         setupConstraints()
     }
-    
+
     private func setupTabBar() {
         self.tabBar.isHidden = true
         DispatchQueue.main.async {
@@ -62,16 +62,15 @@ class MainTabBarView: UITabBarController {
             self.viewControllers = [listVC, starVC]
         }
     }
-    
+
     private func setupConstraints() {
-        
         NSLayoutConstraint.activate([
             listButton.heightAnchor.constraint(equalToConstant: Constants.buttonsSize),
             listButton.widthAnchor.constraint(equalToConstant: Constants.buttonsSize),
             listButton.leadingAnchor.constraint(equalTo: self.tabBar.leadingAnchor,
                                                 constant: Constants.leadingAnchor),
             listButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: -Constants.layoutValue),
-            
+
             starButton.heightAnchor.constraint(equalToConstant: Constants.buttonsSize),
             starButton.widthAnchor.constraint(equalToConstant: Constants.buttonsSize),
             starButton.trailingAnchor.constraint(equalTo: self.tabBar.trailingAnchor,
@@ -83,12 +82,11 @@ class MainTabBarView: UITabBarController {
             imageView.heightAnchor.constraint(equalToConstant: Constants.imageViewHeight)
         ])
     }
-    
     @objc
     private func favoriteButtonAction() {
         self.selectedIndex = Screens.favoriteVC.rawValue
     }
-    
+
     @objc
     private func listButtonAction() {
         self.selectedIndex = Screens.listVC.rawValue

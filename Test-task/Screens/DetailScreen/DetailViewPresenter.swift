@@ -11,7 +11,6 @@ class DetailViewPresenter: NSObject {
     func saveDataToStorage(_ data: LoadedData) {
         CoreDataService.standart.save(model: data)
     }
-    
     func containsId(_ id: String, completion: @escaping (_ response: Bool) -> Void) {
         let data = CoreDataService.standart.fetch()
         data?.forEach({ object in

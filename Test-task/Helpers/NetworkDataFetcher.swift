@@ -21,7 +21,7 @@ class NetworkDataFetcher: NSObject {
         var urlRequest = URLRequest(url: url)
         urlRequest.setValue("Client-ID \(Constants.apiKey)",
                             forHTTPHeaderField: Constants.headerField)
-        
+
         URLSession.shared.dataTask(with: urlRequest) { data, _, _ in
             guard let data = data else {
                 completion(nil)
@@ -30,7 +30,7 @@ class NetworkDataFetcher: NSObject {
             completion(data)
         }.resume()
     }
-    
+
     func getData(state: String, completion: @escaping (_ data: [LoadedData]?) -> Void) {
         loadFromNetwork(string: state) { data in
             guard let data = data else {
@@ -40,7 +40,7 @@ class NetworkDataFetcher: NSObject {
             completion(self.parser(data: data))
         }
     }
-    
+
     private func parser(data: Data) -> [LoadedData]? {
         var objects = [LoadedData]()
         do {
@@ -57,10 +57,10 @@ class NetworkDataFetcher: NSObject {
             manualParse(data: data, objects: &objects)
             return objects
         }
-        
+
         return objects
     }
-    
+
     private func manualParse(data: Data, objects: inout [LoadedData]) {
         if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
             json.forEach { object in

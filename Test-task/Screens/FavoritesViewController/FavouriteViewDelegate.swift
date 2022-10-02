@@ -13,6 +13,6 @@ protocol FavouriteViewDelegate: NSObjectProtocol {
 
 extension FavouriteViewDelegate {
     func getFetchedData() {
-        
+
     }
 }

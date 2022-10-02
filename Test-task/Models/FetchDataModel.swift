@@ -22,7 +22,7 @@ struct Result: Codable {
     let createdAt: String
     let urls: Urls
     let user: User
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case createdAt = "created_at"
@@ -34,7 +34,7 @@ struct Result: Codable {
 struct Urls: Codable {
     let raw, full, regular, small: String
     let thumb, smallS3: String
-    
+
     enum CodingKeys: String, CodingKey {
         case raw, full, regular, small, thumb
         case smallS3 = "small_s3"
@@ -57,7 +57,7 @@ struct User: Codable {
 struct UserLinks: Codable {
     let linksSelf, html, photos, likes: String
     let portfolio, following, followers: String
-    
+
     enum CodingKeys: String, CodingKey {
         case linksSelf = "self"
         case html, photos, likes, portfolio, following, followers
@@ -73,7 +73,7 @@ struct ProfileImage: Codable {
 struct Social: Codable {
     let instagramUsername: String
     let portfolioURL: String
-    
+
     enum CodingKeys: String, CodingKey {
         case instagramUsername = "instagram_username"
         case portfolioURL = "portfolio_url"

@@ -12,14 +12,14 @@ class ListViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var presenter: ListViewPresenter?
     private let searchBar = UISearchBar()
-    
+
     private var mainTabBar: MainTabBarView {
         return (self.tabBarController as? MainTabBarView) ?? MainTabBarView()
     }
     // MARK: - Internal properties
     var dataSource: UICollectionViewDiffableDataSource<Section, LoadedData>?
     var snapShot = NSDiffableDataSourceSnapshot<Section, LoadedData>()
-    
+
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class ListViewController: UIViewController {
         presenter?.setVC(self)
         presenter?.fetchFirstLaunchData()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupTabBar(mainTabBar, alphaValue: 1)
@@ -46,7 +46,7 @@ extension ListViewController: ListViewDelegate {
                                      loadedData: data), animated: true)
         }
     }
-    
+
     private func initPresenter() {
         self.presenter = ListViewPresenter()
         self.presenter?.setDelegate(self)
@@ -59,7 +59,7 @@ extension ListViewController: UISearchBarDelegate {
         self.view.backgroundColor = .white
         setupSearchBar()
     }
-    
+
     private func setupSearchBar() {
         searchBar.searchBarStyle = UISearchBar.Style.default
         searchBar.placeholder = "Search..."
@@ -70,7 +70,7 @@ extension ListViewController: UISearchBarDelegate {
         searchBar.addDoneButtonOnKeyboard()
         navigationItem.titleView = searchBar
     }
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String) {
         guard textSearched.isEmpty else {
             presenter?.fetchQuerySearch(textSearched)
@@ -81,11 +81,11 @@ extension ListViewController: UISearchBarDelegate {
             searchBar.searchTextField.resignFirstResponder()
         }
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.searchTextField.resignFirstResponder()
     }
-    
+
     func createSnapshot() -> NSDiffableDataSourceSnapshot<Section, LoadedData> {
         return NSDiffableDataSourceSnapshot<Section, LoadedData>()
     }
@@ -93,7 +93,7 @@ extension ListViewController: UISearchBarDelegate {
 
 // MARK: - Setup Collection View
 extension ListViewController: UICollectionViewDelegate {
-    
+
     private func setupCollectionView() {
         let size = CGSize(width: self.view.frame.width, height: self.view.frame.height)
         collectionView = UICollectionView(frame: CGRect(origin: .zero, size: size),
@@ -105,7 +105,7 @@ extension ListViewController: UICollectionViewDelegate {
         view.addSubview(collectionView ?? UICollectionView())
         collectionView?.delegate = self
     }
-    
+
     private func setupCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, _) ->
             NSCollectionLayoutSection? in
@@ -119,16 +119,15 @@ extension ListViewController: UICollectionViewDelegate {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         layout.configuration = config
-        
+
         return layout
-        
+
     }
-    
     private func setupLayout() -> NSCollectionLayoutSection {
         // itemSize -> item -> groupSize -> groups -> section
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
-        
+
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                                heightDimension: .fractionalWidth(0.6))
@@ -144,7 +143,7 @@ extension ListViewController: UICollectionViewDelegate {
                                                         trailing: Constants.insetValue)
         return section
     }
-    
+
     private func setupCollectionViewDataSource() {
         // swiftlint:disable all
         dataSource = UICollectionViewDiffableDataSource<Section,

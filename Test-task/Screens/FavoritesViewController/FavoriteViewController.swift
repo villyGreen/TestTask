@@ -13,18 +13,18 @@ class FavoriteViewController: UIViewController {
     private var mainTabBar: MainTabBarView {
         return (self.tabBarController as? MainTabBarView) ?? MainTabBarView()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         initPresenter()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupTabBar(mainTabBar, alphaValue: 1)
@@ -38,7 +38,7 @@ private extension FavoriteViewController {
         self.title = "Favourites"
         self.view.backgroundColor = .white
     }
-    
+
     private func setupTableView() {
         let size = CGSize(width: self.view.frame.width, height: self.view.frame.height)
         tableView = UITableView(frame: CGRect(origin: .zero, size: size))
@@ -62,18 +62,18 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
         cell?.configure(value: presenter?.data[indexPath.row])
         return cell ?? UITableViewCell()
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigationController?.pushViewController(DetailViewController(fromTableView: true,
                                                                            loadedData: presenter?.data[indexPath.row]
                                                                             ?? LoadedData()),
                                                       animated: true)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.heightTableViewRow
     }
-    
+
     // swiftlint:disable all
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -92,7 +92,7 @@ extension FavoriteViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension FavoriteViewController: FavouriteViewDelegate {
-    
+
     private func initPresenter() {
         self.presenter = FavoriteViewPresenter()
         presenter?.setDelegate(self)
