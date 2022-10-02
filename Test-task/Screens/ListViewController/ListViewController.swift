@@ -67,6 +67,7 @@ extension ListViewController: UISearchBarDelegate {
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
+        searchBar.addDoneButtonOnKeyboard()
         navigationItem.titleView = searchBar
     }
     
